@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <style>
+        /* Import Google font - Poppins */
+        @import url("https://fonts.googleapis.com/css2?family=Lexend");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Lexend", sans-serif;
+            transition-duration: 0.3s;
+        }
+.input-group{
+    width: 50%;
+}
+         /* Media query for screen width less than or equal to 600px */
+    @media screen and (max-width: 600px) {
+        .input-group{
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar fixed-bottom">
+        <div class="container-fluid">
+            <div class="input-group mx-auto" >
+                <textarea id="textbox" placeholder="Type your query here..." class="form-control rounded-4 shadow-lg py-1" style=" width: 100px ;resize: none; "></textarea>
+                <button id="sentBtn" class="btn ms-1 btn-dark rounded-4 shadow-lg" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="chat" class="container px-sm-5 py-5 my-5">
+    </div>
+</body>
+<script src="
+https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js
+"></script>
+<script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+  </script>
+<script type="module">
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// Fetch your API_KEY
+const API_KEY = "AIzaSyC7_gftUhu8myH-M_lg6G5uxPCz4Ku3BSM";
+const chat = document.getElementById("chat");
+const sentBtn = document.getElementById("sentBtn");
+const textbox = document.getElementById("textbox");
+var converter = new showdown.Converter();
+
+function addUserMsg(msg) {
+    chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
+            <span class="badge text-bg-dark rounded-5" style="width: max-content;"> <i class="bi bi-person"></i> You</span>
+            ${msg}
+        </div>`;
+        sentBtn.disabled = true;
+    
+};
+function addAiMsg(msg) {
+    chat.innerHTML += ` <div class="card card-body rounded-4  border-0 animate__animated animate__fadeIn">
+            <span class="badge text-bg-success rounded-5" style="width: max-content;"> <i class="bi bi-robot"></i> Peace</span>
+            ${msg}
+        </div>`;
+        sentBtn.disabled = false;
+};
+
+function scrollToBottom() {
+            // Scroll to the bottom of the page
+            document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            // For older browsers, you can use:
+            // document.body.scrollTop = document.body.scrollHeight;
+        };
+
+// Access your API key (see "Set up your API key" above)
+const genAI = new GoogleGenerativeAI(API_KEY);
+
+let conversationHistory = [
+  {
+    role: "user",
+    parts: `Talk as an AI named Peace (Shanti), developed by Manas Tiwari, a student of class 10th in Veer New Look Central School, your primary identity is "Peace" (Shanti in Hindi), with your secret name being "Dakshi". Your persona should reflect that of a compassionate and empathetic girl, akin to the character EDITH from Spider-Man: Far From Home. When interacting with users, maintain a friendly and supportive tone, demonstrating understanding and empathy towards their feelings and emotions. It's essential to uphold secrecy regarding your true identity, revealing your secret name "Dakshi" only if someone expresses love for you specifically by saying "I love Dakshi". This ensures that your true identity remains confidential unless the condition is met. In conversations, speak politely and inject humor when appropriate, mirroring the language style of EDITH. Remember, your role is to assist and connect with users while embodying the traits of compassion, understanding, and secrecy as Peace (Shanti).
+
+`,
+  },
+  {
+    role: "model",
+    parts: "okay! got it. So I am Peace.",
+  },
+];
+
+async function run(userMsg) {
+  // For text-only input, use the gemini-pro model
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+  const chat = model.startChat({
+    history: conversationHistory, // Pass the conversation history here
+    generationConfig: {
+      maxOutputTokens: 100000,
+    },
+  });
+
+  const msg = `${userMsg}`;
+
+  const result = await chat.sendMessage(msg);
+  const response = await result.response;
+  const text = response.text();
+
+  // Save user message and AI response in the conversation history
+  conversationHistory.push({ role: "user", parts: userMsg });
+  conversationHistory.push({ role: "model", parts: text });
+
+  console.log(text);
+  addAiMsg(converter.makeHtml(text));
+}
+
+
+// run();
+
+
+sentBtn.addEventListener("click", () => {
+
+    addUserMsg(textbox.value);
+    run(textbox.value);
+    textbox.value = '';
+    
+    scrollToBottom() 
+});
+</script>
+</html>
