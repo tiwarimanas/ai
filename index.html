@@ -46,11 +46,9 @@
 
     <div id="chat" class="container px-sm-5 py-5 my-5">
       <div class="text-center">
-        <img class="img-fluid animate__animated animate__fadeInUp" style="width:200px" src="https://play-lh.googleusercontent.com/tNhUCrRocFpYzttTeBSG28xyzmSOgdGgMSHQZCxZsIDQO7edFRLSkqKEQ5DuTUETnso" alt="VNLCS">
-        <div class="my-2 img-fluid animate__animated animate__fadeInUp">
-          <h3>Welcome to <span class="text-success fw-bold">Peace</span></h3>
-          <br>
-         <span> Empowering Conversations, One Emotion at a Time</span>
+        <img class="img-fluid animate__animated animate__fadeIn" style="width:400px" src="logo.png" alt="VNLCS">
+        <div class="my-2 fs-3 fw-bold text-success animate__animated animate__fadeInUp">
+         Empowering Conversations, One Emotion at a Time
         </div>
     </div>
 </body>
@@ -73,13 +71,18 @@ const chat = document.getElementById("chat");
 const sentBtn = document.getElementById("sentBtn");
 const textbox = document.getElementById("textbox");
 var converter = new showdown.Converter();
-
+var starter = 0;
 function addUserMsg(msg) {
+  if (starter == 0) {
+    chat.innerHTML="";
+    starter = 1;
+  }
     chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
             <span class="badge text-bg-dark rounded-5" style="width: max-content;"> <i class="bi bi-person"></i> You</span>
             ${msg}
         </div>`;
         sentBtn.disabled = true;
+        
     
 };
 function addAiMsg(msg) {
@@ -88,13 +91,14 @@ function addAiMsg(msg) {
             ${msg}
         </div>`;
         sentBtn.disabled = false;
+        scrollToBottom();
 };
 
 function scrollToBottom() {
             // Scroll to the bottom of the page
             document.documentElement.scrollTop = document.documentElement.scrollHeight;
             // For older browsers, you can use:
-            // document.body.scrollTop = document.body.scrollHeight;
+            document.body.scrollTop = document.body.scrollHeight;s
         };
 
 // Access your API key (see "Set up your API key" above)
@@ -149,5 +153,16 @@ sentBtn.addEventListener("click", () => {
     
     scrollToBottom() 
 });
+
+textbox.addEventListener("keypress", function(event) {
+    // Check if the pressed key is Enter (key code 13)
+    if (event.keyCode === 13) {
+      addUserMsg(textbox.value);
+    run(textbox.value);
+    textbox.value = '';
+  
+    scrollToBottom() 
+    }
+  });
 </script>
 </html>
