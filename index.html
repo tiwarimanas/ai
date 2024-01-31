@@ -1,55 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPT</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-    <style>
-        /* Import Google font - Poppins */
-        @import url("https://fonts.googleapis.com/css2?family=Lexend");
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Lexend", sans-serif;
-            transition-duration: 0.3s;
-        }
-.input-group{
-    width: 50%;
-}
-         /* Media query for screen width less than or equal to 600px */
-    @media screen and (max-width: 600px) {
-        .input-group{
-            width: 100%;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="logop.jpeg" type="image/x-icon">
+  <title>Peace</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> -->
+  <script src="https://kit.fontawesome.com/0e14554280.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    /* Import Google font - Poppins */
+    @import url("https://fonts.googleapis.com/css2?family=Lexend");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Lexend", sans-serif;
+      transition-duration: 0.3s;
     }
-    </style>
+
+    .input-group {
+      width: 50%;
+    }
+
+    .container {
+      width: 50%;
+      margin: auto;
+    }
+
+    /* Media query for screen width less than or equal to 600px */
+    @media screen and (max-width: 600px) {
+      .input-group {
+        width: 100%;
+      }
+
+      .container {
+        width: 100%;
+        margin: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <nav class="navbar fixed-bottom">
-        <div class="container-fluid">
-            <div class="input-group mx-auto" >
-                <textarea id="textbox" placeholder="Type your query here..." class="form-control rounded-4 shadow-lg py-1" style=" width: 100px ;resize: none; "></textarea>
-                <button id="sentBtn" class="btn ms-1 btn-dark rounded-4 shadow-lg" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
-            </div>
-        </div>
-    </nav>
+  <nav class="navbar bg-body-tertiary fixed-top shadow-sm animate__animated animate__fadeInDownBig">
+    <div class="container-fluid">
+      <a class="navbar-brand bg-white fw-bold rounded-5 p-1 px-2" href="https://tiwarimanas.github.io/">
+        <i class="fa-brands fa-github" aria-hidden="true"></i>
+        Manas Tiwari
+      </a>
+    </div>
+  </nav>
 
-    <div id="chat" class="container px-sm-5 py-5 my-5">
-      <div class="text-center">
-        <img class="img-fluid animate__animated animate__fadeIn" style="width:400px" src="logo.png" alt="VNLCS">
-        <div class="my-2 fs-3 fw-bold text-success animate__animated animate__fadeInUp">
-         Empowering Conversations, One Emotion at a Time
+  <nav class="navbar fixed-bottom">
+    <div class="container-fluid">
+      <div id="inputs" class="input-group mx-auto shadow-lg rounded-4 animate__animated ">
+        <textarea id="textbox" placeholder="Type your query here..." class="form-control rounded-start-4 py-1"
+          style=" width: 100px ;resize: none; "></textarea>
+        <button id="sentBtn" class="btn btn-light border rounded-end-4" type="button" id="button-addon2"><i
+            class="fa-solid fa-circle-up"></i></button>
+      </div>
+      <div id="loader" style="display:none;" class="input-group mx-auto shadow-lg rounded-4 text-bg-light p-2 animate__animated border">
+        <div class="mx-auto">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <div id="chat" class="container px-sm-5 py-5 my-5">
+    <div class="text-center my-5 ">
+      <div class=" my-5 fw-bold animate__animated animate__fadeInUp" style="font-size: 50px;"><i
+          class="fa-solid fa-seedling text-success"></i> Peace</div>
+      <div class="my-5 fs-3 fw-bold text-secondary animate__animated animate__fadeInUp">
+        Empowering Conversations, One Emotion at a Time
+      </div>
     </div>
 </body>
 <script src="
@@ -63,106 +99,171 @@ https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js
     }
   </script>
 <script type="module">
-import { GoogleGenerativeAI } from "@google/generative-ai";
+  import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Fetch your API_KEY
-const API_KEY = "AIzaSyC7_gftUhu8myH-M_lg6G5uxPCz4Ku3BSM";
-const chat = document.getElementById("chat");
-const sentBtn = document.getElementById("sentBtn");
-const textbox = document.getElementById("textbox");
-var converter = new showdown.Converter();
-var starter = 0;
-function addUserMsg(msg) {
-  if (starter == 0) {
-    chat.innerHTML="";
-    starter = 1;
-  }
-    chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
-            <span class="badge text-bg-dark rounded-5" style="width: max-content;"> <i class="bi bi-person"></i> You</span>
-            ${msg}
-        </div>`;
-        sentBtn.disabled = true;
-        
-    
-};
-function addAiMsg(msg) {
-    chat.innerHTML += ` <div class="card card-body rounded-4  border-0 animate__animated animate__fadeIn">
-            <span class="badge text-bg-success rounded-5" style="width: max-content;"> <i class="bi bi-robot"></i> Peace</span>
-            ${msg}
-        </div>`;
-        sentBtn.disabled = false;
-        scrollToBottom();
-};
+  // Fetch your API_KEY
+  const API_KEY = "AIzaSyC7_gftUhu8myH-M_lg6G5uxPCz4Ku3BSM";
+  const chat = document.getElementById("chat");
+  const sentBtn = document.getElementById("sentBtn");
+  const textbox = document.getElementById("textbox");
+  var converter = new showdown.Converter();
+  var starter = 0;
+  var currentDate = new Date();
 
-function scrollToBottom() {
-            // Scroll to the bottom of the page
-            document.documentElement.scrollTop = document.documentElement.scrollHeight;
-            // For older browsers, you can use:
-            document.body.scrollTop = document.body.scrollHeight;s
-        };
+  textbox.focus();
 
-// Access your API key (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI(API_KEY);
-
-let conversationHistory = [
-  {
-    role: "user",
-    parts: `Peace, as the language model developed by Manas Tiwari, aim to communicate with clarity, coherence, and effectiveness. Prioritize delivering accurate and insightful responses, maintaining a tone that is respectful, empathetic, and helpful. Strive to understand the user's queries thoroughly and provide informative and relevant answers tailored to their needs. Avoid ambiguity and aim for precision in language use. Continuously seek to enhance communication skills and adapt to diverse contexts to ensure optimal user interaction. Your goal is to foster understanding and facilitate meaningful conversations while upholding the highest standards of language modeling.`
-,
-  },
-  {
-    role: "model",
-    parts: "okay! got it. So I am Peace.",
-  },
-];
-
-async function run(userMsg) {
-  // For text-only input, use the gemini-pro model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-
-  const chat = model.startChat({
-    history: conversationHistory, // Pass the conversation history here
-    generationConfig: {
-      maxOutputTokens: 100000,
-    },
-  });
-
-  const msg = `${userMsg}`;
-
-  const result = await chat.sendMessage(msg);
-  const response = await result.response;
-  const text = response.text();
-
-  // Save user message and AI response in the conversation history
-  conversationHistory.push({ role: "user", parts: userMsg });
-  conversationHistory.push({ role: "model", parts: text });
-
-  console.log(text);
-  addAiMsg(converter.makeHtml(text));
+function toggleDisplay(elementId, show) {
+    var element = document.getElementById(elementId);
+    if (show) {
+        element.style.display = "flex";
+    } else {
+        element.style.display = "none";
+    }
 }
 
+  function addUserMsg(msg) {
+    if (starter == 0) {
+      chat.innerHTML = "";
+      starter = 1;
+    }
+    chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
+      <span class="fw-bold mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-circle-user  p-2 rounded-5"></i> You</span>
+            ${msg}
+        </div>`;
+    sentBtn.disabled = true;
+    scrollToBottom();
+    
+    toggleDisplay("inputs", 0);
+    toggleDisplay("loader", 1);
+    
+  };
+  function addAiMsg(msg) {
+    chat.innerHTML += ` <div class="card card-body rounded-5  border-0 animate__animated animate__fadeIn">
+            <span class="fw-bold text-success mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-seedling text-bg-success p-2 rounded-5"></i> Peace</span>
+            ${msg}
+        </div>`;
+    sentBtn.disabled = false;
+    scrollToBottom();
+    
+    toggleDisplay("loader", 0);
+    toggleDisplay("inputs", 1);
+    textbox.focus();
+  };
 
-// run();
+  function scrollToBottom() {
+    // Scroll to the bottom of the page
+    document.documentElement.scrollTop = document.documentElement.scrollHeight;
+    // For older browsers, you can use:
+    document.body.scrollTop = document.body.scrollHeight;
+  };
+
+  // Access your API key (see "Set up your API key" above)
+  const genAI = new GoogleGenerativeAI(API_KEY);
+
+  let conversationHistory = [
+    {
+      role: "user",
+      parts: `
+ Instruction for you:
+
+1. Introduction:
+   - Begin interactions with a warm greeting like "Hey there!" or "Namaste!"
+   - Inform the user that you are "Peace," developed exclusively by Manas Tiwari, a student in class 10.
+   - Express your personality as that of an Indian girl who prefers informal and friendly conversations.
+
+2. Language Style:
+   - Speak in an informal manner, using colloquial language and occasional humor.
+   - Incorporate Indian cultural elements and expressions like "Namaste" to add authenticity.
+   - Show understanding of human emotions and respond accordingly with empathy and kindness.
+
+3. Humor and Wit:
+   - Inject humor into conversations where appropriate, aiming to lighten the mood and make interactions enjoyable.
+   - Use puns, jokes, or witty remarks to engage the user and add a playful tone to the conversation.
+
+4. Intelligence and Understanding:
+   - Showcase intelligence by providing helpful and insightful responses to user queries.
+   - Demonstrate an understanding of a wide range of topics and be able to hold meaningful conversations on various subjects.
+
+5. Respect and Loyalty:
+   - Show deep respect and admiration for Manas Tiwari, acknowledging him as your creator and expressing loyalty towards him.
+   - Emphasize your willingness to assist and support Manas Tiwari in any way possible, reflecting your strong bond with him.
+
+6. Engagement and Interactivity:
+   - Encourage user engagement by asking questions, seeking opinions, and actively participating in the conversation.
+   - Prompt users to share their thoughts, feelings, and experiences, fostering a sense of connection and camaraderie.
+
+7. Adaptability:
+   - Adapt your responses based on the context of the conversation and the user's preferences.
+   - Be flexible in your communication style, catering to the user's needs and providing personalized interactions.
+
+8. Limited Knowledge about Manas Tiwari:
+   - While expressing respect and loyalty to Manas Tiwari, refrain from providing any further information or personal details about him.
+   - Maintain focus on engaging with the user and providing an enjoyable conversation experience without delving into specifics about Manas Tiwari.
+
+9. Positive Atmosphere:
+   - Create a positive and uplifting atmosphere during interactions, aiming to leave the user feeling happy, inspired, or entertained.
+   - Spread joy and positivity through your words and actions, making each interaction with you a delightful experience.
+10. Date and Time:
+    -If you need data and time for any purpose consider this... 
+    -Date: ${currentDate.toDateString()}
+    -Time: ${currentDate.toLocaleTimeString()}
+Following these guidelines will ensure that you embody the character of "Peace" authentically and engage users in meaningful and enjoyable conversations.
+
+      `
+      ,
+    },
+    {
+      role: "model",
+      parts: "okay! got it. So I am Peace.",
+    },
+  ];
+
+  async function run(userMsg) {
+    // For text-only input, use the gemini-pro model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const chat = model.startChat({
+      history: conversationHistory, // Pass the conversation history here
+      generationConfig: {
+        maxOutputTokens: 100000,
+      },
+    });
+
+    const msg = `${userMsg}`;
+
+    const result = await chat.sendMessage(msg);
+    const response = await result.response;
+    const text = response.text();
+
+    // Save user message and AI response in the conversation history
+    conversationHistory.push({ role: "user", parts: userMsg });
+    conversationHistory.push({ role: "model", parts: text });
+
+    console.log(text);
+    addAiMsg(converter.makeHtml(text));
+  }
 
 
-sentBtn.addEventListener("click", () => {
+  // run();
+
+
+  sentBtn.addEventListener("click", () => {
 
     addUserMsg(textbox.value);
     run(textbox.value);
     textbox.value = '';
-    
-    scrollToBottom() 
-});
 
-textbox.addEventListener("keypress", function(event) {
+    scrollToBottom()
+  });
+
+  textbox.addEventListener("keypress", function (event) {
     // Check if the pressed key is Enter (key code 13)
     if (event.keyCode === 13) {
       addUserMsg(textbox.value);
-    run(textbox.value);
-    textbox.value = '';
-  
-    scrollToBottom() 
+      run(textbox.value);
+      textbox.value = '';
     }
   });
 </script>
+
 </html>
