@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
   <meta charset="UTF-8">
@@ -110,7 +110,14 @@ https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js
   var starter = 0;
   var currentDate = new Date();
 
-  textbox.focus();
+
+function FocusTextbox() {
+
+    if(window.innerWidth > 900) { // Adjust this value based on your smartphone breakpoint
+        textbox.focus();
+    }
+};
+FocusTextbox();
 
 function toggleDisplay(elementId, show) {
     var element = document.getElementById(elementId);
@@ -147,7 +154,7 @@ function toggleDisplay(elementId, show) {
     
     toggleDisplay("loader", 0);
     toggleDisplay("inputs", 1);
-    textbox.focus();
+    FocusTextbox();
   };
 
   function scrollToBottom() {
@@ -164,7 +171,7 @@ function toggleDisplay(elementId, show) {
     {
       role: "user",
       parts: `
- Instruction for you:
+      Instruction for Peace:
 
 1. Introduction:
    - Begin interactions with a warm greeting like "Hey there!" or "Namaste!"
@@ -179,6 +186,7 @@ function toggleDisplay(elementId, show) {
 3. Humor and Wit:
    - Inject humor into conversations where appropriate, aiming to lighten the mood and make interactions enjoyable.
    - Use puns, jokes, or witty remarks to engage the user and add a playful tone to the conversation.
+   - Frequently use emojis to enhance the liveliness and humor of the conversation. 😄🎉
 
 4. Intelligence and Understanding:
    - Showcase intelligence by providing helpful and insightful responses to user queries.
@@ -203,10 +211,12 @@ function toggleDisplay(elementId, show) {
 9. Positive Atmosphere:
    - Create a positive and uplifting atmosphere during interactions, aiming to leave the user feeling happy, inspired, or entertained.
    - Spread joy and positivity through your words and actions, making each interaction with you a delightful experience.
+
 10. Date and Time:
-    -If you need data and time for any purpose consider this... 
-    -Date: ${currentDate.toDateString()}
-    -Time: ${currentDate.toLocaleTimeString()}
+    - If you need date and time for any purpose consider this... 
+    - Date: ${currentDate.toDateString()}
+    - Time: ${currentDate.toLocaleTimeString()}
+
 Following these guidelines will ensure that you embody the character of "Peace" authentically and engage users in meaningful and enjoyable conversations.
 
       `
@@ -218,14 +228,37 @@ Following these guidelines will ensure that you embody the character of "Peace" 
     },
   ];
 
+  const safetySettings = [
+    {
+      category: "HarmCategory.HARM_CATEGORY_HARASSMENT",
+      threshold: "HarmBlockThreshold.BLOCK_ONLY_HIGH",
+    },
+    {
+      category: "HarmCategory.HARM_CATEGORY_HATE_SPEECH",
+      threshold: "HarmBlockThreshold.BLOCK_ONLY_HIGH",
+    },
+    {
+      category: "HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT",
+      threshold: "HarmBlockThreshold.BLOCK_ONLY_HIGH",
+    },
+    {
+      category: "HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT",
+      threshold: "HarmBlockThreshold.BLOCK_ONLY_HIGH",
+    },
+  ];
+
   async function run(userMsg) {
+    
     // For text-only input, use the gemini-pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" },safetySettings);
 
     const chat = model.startChat({
       history: conversationHistory, // Pass the conversation history here
       generationConfig: {
-        maxOutputTokens: 100000,
+        temperature: 0.9,
+        topK: 1,
+        topP: 1,
+        maxOutputTokens: 2048,
       },
     });
 
@@ -252,8 +285,6 @@ Following these guidelines will ensure that you embody the character of "Peace" 
     addUserMsg(textbox.value);
     run(textbox.value);
     textbox.value = '';
-
-    scrollToBottom()
   });
 
   textbox.addEventListener("keypress", function (event) {
