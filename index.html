@@ -128,22 +128,54 @@ function toggleDisplay(elementId, show) {
     }
 }
 
+  // function addUserMsg(msg) {
+  //   if (starter == 0) {
+  //     chat.innerHTML = "";
+  //     starter = 1;
+  //   }
+  //   chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
+  //     <span class="fw-bold mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-circle-user  p-2 rounded-5"></i> You</span>
+  //           ${msg}
+  //       </div>`;
+  //   sentBtn.disabled = true;
+  //   scrollToBottom();
+    
+  //   toggleDisplay("inputs", 0);
+  //   toggleDisplay("loader", 1);
+    
+  // };
+
   function addUserMsg(msg) {
-    if (starter == 0) {
-      chat.innerHTML = "";
-      starter = 1;
-    }
-    chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
-      <span class="fw-bold mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-circle-user  p-2 rounded-5"></i> You</span>
-            ${msg}
-        </div>`;
-    sentBtn.disabled = true;
-    scrollToBottom();
-    
-    toggleDisplay("inputs", 0);
-    toggleDisplay("loader", 1);
-    
-  };
+  if (starter == 0) {
+    chat.innerHTML = "";
+    starter = 1;
+  }
+  
+  // Escape HTML characters in the msg variable
+  msg = escapeHtml(msg);
+  
+  // Insert the escaped content into the chat element
+  chat.innerHTML += `<div class="card card-body rounded-4 animate__animated animate__fadeIn border-0">
+    <span class="fw-bold mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-circle-user  p-2 rounded-5"></i> You</span>
+          ${msg}
+      </div>`;
+  
+  sentBtn.disabled = true;
+  scrollToBottom();
+  
+  toggleDisplay("inputs", 0);
+  toggleDisplay("loader", 1);
+}
+
+// Function to escape HTML characters
+function escapeHtml(html) {
+  var text = document.createTextNode(html);
+  var div = document.createElement('div');
+  div.appendChild(text);
+  return div.innerHTML;
+}
+
+  
   function addAiMsg(msg) {
     chat.innerHTML += ` <div class="card card-body rounded-5  border-0 animate__animated animate__fadeIn">
             <span class="fw-bold text-success mb-2 bg-light shadow-sm rounded-5 pe-2" style="width: max-content;"><i class="fa-solid fa-seedling text-bg-success p-2 rounded-5"></i> Peace</span>
